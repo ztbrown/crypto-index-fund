@@ -1,0 +1,13 @@
+*.sqlite3
+config.sh
+*.json
+*.txt
+
+.bundle
+*.swp
+
+.DS_Store
+
+data
+bin
+
