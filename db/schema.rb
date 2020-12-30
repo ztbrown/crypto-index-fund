@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_152406) do
+ActiveRecord::Schema.define(version: 2020_12_30_170608) do
 
   create_table "coins", force: :cascade do |t|
     t.string "name"
@@ -29,13 +29,13 @@ ActiveRecord::Schema.define(version: 2020_12_29_152406) do
   end
 
   create_table "holdings", force: :cascade do |t|
-    t.integer "fund_id"
+    t.integer "snapshot_id"
     t.integer "coin_id"
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coin_id"], name: "index_holdings_on_coin_id"
-    t.index ["fund_id"], name: "index_holdings_on_fund_id"
+    t.index ["snapshot_id"], name: "index_holdings_on_snapshot_id"
   end
 
   create_table "quotes", force: :cascade do |t|
@@ -49,13 +49,22 @@ ActiveRecord::Schema.define(version: 2020_12_29_152406) do
     t.index ["coin_id"], name: "index_quotes_on_coin_id"
   end
 
-  create_table "taggable", force: :cascade do |t|
+  create_table "snapshots", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "fund_id"
+    t.index ["fund_id"], name: "index_snapshots_on_fund_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
     t.integer "coin_id"
     t.integer "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["coin_id"], name: "index_taggable_on_coin_id"
-    t.index ["tag_id"], name: "index_taggable_on_tag_id"
+    t.index ["coin_id"], name: "index_taggings_on_coin_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -64,4 +73,5 @@ ActiveRecord::Schema.define(version: 2020_12_29_152406) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "snapshots", "funds"
 end

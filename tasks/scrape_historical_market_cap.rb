@@ -3,10 +3,8 @@ require_relative "../lib/get_top_currencies"
 require 'net/http'
 require 'open-uri'
 require 'json'
-require 'active_record'
 require 'date'
-require_relative '../app/models/quote'
-require_relative '../app/models/coin'
+require_relative '../config/boot'
 
 def scrape_historical_market_cap(name, id, start_time, end_time)
     uri = URI.parse("https://web-api.coinmarketcap.com/v1.1/cryptocurrency/quotes/historical?convert=USD,BTC&format=chart_crypto_details&id=#{id}&interval=1h&time_end=#{end_time}&time_start=#{start_time}")
@@ -24,14 +22,8 @@ def scrape_historical_market_cap(name, id, start_time, end_time)
     JSON.parse(response.body)
 end
 
-
-currencies = get_top_currencies(50)
-
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.sqlite3')
-
-currencies.each do |currency|
-  data = scrape_historical_market_cap(currency['symbol'], currency['id'], 1608607741, DateTime.now.to_i)
-  coin = Coin.find_by_symbol(currency['symbol'])
+Coin.all.each do |coin|
+  data = scrape_historical_market_cap(coin.symbol, coin.cmc_id, 1608607741, DateTime.now.to_i)
   puts coin.name
   data['data'].each do |q|
     quote = coin.quotes.find_or_initialize_by({timestamp: DateTime.parse(q[0])})

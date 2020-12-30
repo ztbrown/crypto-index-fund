@@ -18,7 +18,7 @@ def ghmc(symbol, start, finish)
   end
 end
 
-mc = ghmc("BTC", "2020-12-19T11:29:43.000Z","2020-12-22T02:29:43.000Z")
+mc = ghmc("BTC", "2020-09-01T11:29:43.000Z","2020-09-30T23:29:43.000Z")
 
 puts mc
 

@@ -6,7 +6,7 @@ class AddTagsAndTaggableToCoins < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    create_table :taggable do |t|
+    create_table :taggings do |t|
       t.belongs_to :coin
       t.belongs_to :tag
 
