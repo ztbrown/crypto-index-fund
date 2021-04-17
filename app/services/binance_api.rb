@@ -26,6 +26,7 @@ class BinanceAPI
   def order(symbol, side, type, quantity)
     query = "timestamp=#{(Time.now.getutc.to_f * 1000).round(0)}&symbol=#{symbol}&side=#{side}&type=#{type}&quantity=#{quantity}"
     query += "&signature=#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), @secret_key, query)}"
+    puts "https://api.binance.com/api/v3/order?#{query}"
     post("/api/v3/order", query)
   end
 
@@ -34,6 +35,10 @@ class BinanceAPI
     query = "timestamp=#{(Time.now.getutc.to_f * 1000).round(0)}"
     query += "&signature=#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), @secret_key, query)}"
     get("/api/v3/account", query)
+  end
+
+  def exchange_info()
+    get("/api/v3/exchangeInfo", "")
   end
 
   private

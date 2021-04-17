@@ -23,7 +23,7 @@ def scrape_historical_market_cap(name, id, start_time, end_time)
 end
 
 Coin.all.each do |coin|
-  data = scrape_historical_market_cap(coin.symbol, coin.cmc_id, 1608607741, DateTime.now.to_i)
+  data = scrape_historical_market_cap(coin.symbol, coin.cmc_id, 1614502721, DateTime.now.to_i)
   puts coin.name
   data['data'].each do |q|
     quote = coin.quotes.find_or_initialize_by({timestamp: DateTime.parse(q[0])})

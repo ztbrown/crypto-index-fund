@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_30_170608) do
+ActiveRecord::Schema.define(version: 2020_12_30_223253) do
 
   create_table "coins", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 2020_12_30_170608) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coin_id"], name: "index_holdings_on_coin_id"
     t.index ["snapshot_id"], name: "index_holdings_on_snapshot_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "coin_id"
+    t.string "side"
+    t.string "pair"
+    t.decimal "amount"
+    t.boolean "completed", default: false
+    t.string "order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coin_id"], name: "index_orders_on_coin_id"
   end
 
   create_table "quotes", force: :cascade do |t|

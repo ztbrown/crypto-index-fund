@@ -1,6 +1,7 @@
 require 'active_record'
 
 class Coin < ActiveRecord::Base
+  attr_accessor :mc_avg, :priceusdt, :pricebtc, :weight
   has_many :quotes
   has_many :holdings
   has_many :taggings

@@ -16,7 +16,7 @@ def get_currency_price_by_symbol(symbol)
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(request)
     end
-
+    puts response.body
     JSON.parse(response.body)["data"]["#{symbol}"]["quote"]["USD"]["price"].to_f
   rescue => error
     puts "Error Looking for Price of #{symbol}"
